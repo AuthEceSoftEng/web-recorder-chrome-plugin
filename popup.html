@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500" type="text/css" media="all">
+	<script type="text/javascript" src="test.js"></script>
+    <style>
+		*{-moz-box-sizing:border-box; -webkit-box-sizing:border-box; box-sizing:border-box}
+		body {margin:0; padding:0; min-height:200px; font-weight:400}
+		.container {width:300px; margin:0; padding:10px; font-family:Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:13px; color:#333}
+		.container.header {background-color:#88c3a6; background-color:#333; color:#fff; font-weight:400; font-size:17px}
+		.container.header *{vertical-align:text-bottom}
+		.container.header img{margin-right:2px}
+		p {margin:0; padding:5px 0 15px 0; color:#777; line-height:140%}
+		p.title{padding:0 0 6px 0}
+		p.no-padding{padding:0}
+		strong {font-weight:500}
+		form{margin:0;padding:0}
+		.input{display:block;width:100%;padding:7px;margin-bottom:10px;border:1px solid #ccc;border-radius:5px;font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#555}
+		.btn,button {display:block; outline:0; width:100%; cursor:pointer; font-family:Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:15px; font-weight:500; padding:10px 10px; border:0; border-radius:5px; border-bottom:2px solid #2a6496; border-radius:5px; background-color:#428bca; color:#fff; text-align:center; text-decoration:none}
+		.btn:hover,button:hover {background-color:#357ebd; border-bottom:2px solid #1f496e}
+		.btn:active,button:active {border-top:2px solid #fff; border-bottom:0!important}
+		.btn.btn-red,button.btn-red{background-color:#ff0000; border-bottom:2px solid #3e9742}
+		.btn.btn-green,button.btn-green{background-color:#62bf67;border-bottom:2px solid #3e9742}
+		.btn.btn-green:hover,button.btn-green:hover{background-color:#50b855;border-bottom:2px solid #2f7332}
+		.screen {display:none}
+		#btn-save{margin-top:8px}
+		#btn-cancel{margin-top:8px}
+    </style>
+  </head>
+  <body>
+	<div class="container header">
+		<img src="icon.png" align="right"> AUTH Web Recorder
+	</div>
+	<div class="container">
+		<div id="scr-start" class="screen" style="display: block;">
+			<p>Click the <strong>Record</strong> button in order to start recording.</p>
+			<button id="btn-start" class="btn-red">Record</button>
+		</div>
+		<div id="scr-recording" class="screen">
+			<p>You are currently <strong>recording.</strong></p>
+			<button id="btn-done" class="btn-green">Finish Recording</button>
+			<a id="btn-cancel" class="btn btn-red" href="#">Cancel Recording</a>	
+		</div>
+		<div id="scr-save" class="screen">
+			<form id="form-save" action="" method="post" autocomplete="off">
+				<label for="fld-name">Test Name:</label>
+				<input id="fld-name" class="input" type="text" name="name" required>
+				<button id="btn-save" class="btn-green" type="submit">Save This Test</button>
+				<a id="btn-cancel" class="btn btn-red" href="#">Cancel recording</a>
+			</form>
+		</div>
+		<div id="scr-result" class="screen">
+			<p>Your Test has been Uploaded!</p>
+			<a class="btn btn-green" id="btn-result" target="_blank" href="#">View Your Test</a>
+		</div>
+	</div>
+	<div>Icons made by <a href="http://www.flaticon.com/authors/pixel-buddha" title="Pixel Buddha" target="_blank">Pixel Buddha</a> from <a href="http://www.flaticon.com" title="Flaticon" target="_blank">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+  </body>
+</html>
