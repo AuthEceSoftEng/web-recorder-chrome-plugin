@@ -2,7 +2,6 @@
 <html>
   <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<script type="text/javascript" src="popup.js"></script>
     <style>
 		.container {width:300px; margin:0; padding:10px; font-size:13px; color:#333}
 		.container.header {background-color:#88c3a6; background-color:#333; color:#fff; font-weight:400; font-size:17px}
@@ -15,7 +14,7 @@
 		<img src="icon24.png" align="right">Web Recorder
 	</div>
 	<div class="container">
-		<div id="scr-login" class="screen" style="display: block">
+		<div id="scr-login" class="screen">
 			<form id="form-login" action="" method="post" autocomplete="off">
 				<div class="form-group">
 					<label for="fld-username">E-mail:</label>
@@ -39,7 +38,7 @@
 		<div id="scr-recording" class="screen">
 			<p class="lead">You are currently <strong>recording.</strong></p>
 			<button id="btn-done"  class="btn btn-primary btn-lg btn-block" type="button">Finish Recording</button>
-			<a id="btn-cancel"class="btn btn-default btn-lg btn-block" href="#" type="button">Cancel Recording</a>	
+			<button id="btn-cancel-record"class="btn btn-default btn-lg btn-block" type="button">Cancel Recording</button>	
 		</div>
 		<div id="scr-save" class="screen">
 			<form id="form-save" action="" method="post" autocomplete="off">
@@ -48,17 +47,19 @@
 					<input id="fld-name" class="form-control" type="text" placeholder="Test Name" name="name" required>
 				</div>
 				<button id="btn-save" class="btn btn-primary btn-lg btn-block" type="submit">Save This Test</button>	
-				<a id="btn-cancel" class="btn btn-default btn-lg btn-block" href="#" type="button">Cancel recording</a>
+				<button id="btn-cancel-save" class="btn btn-default btn-lg btn-block" type="button">Cancel recording</button>
 			</form>
 		</div>
 		<div id="scr-result" class="screen">
 			<p class="lead">Your Test has been Uploaded!</p>
-			<a class="btn btn-primary btn-lg btn-block" id="btn-result" target="_blank" href="#">View Your Test</a>
+			<a id="btn-result" class="btn btn-primary btn-lg btn-block" target="_blank" href="#">View Your Test</a>
 		</div>
 	</div>
-	<div id="Credits">
+	<footer>
 		<small>Icons made by <a href="http://www.flaticon.com/authors/pixel-buddha" title="Pixel Buddha" target="_blank">Pixel Buddha</a> from <a href="http://www.flaticon.com" title="Flaticon" target="_blank">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
 		</small>
-	</div>
+	</footer>
+	
+	<script type="text/javascript" src="popup.js"></script>
   </body>
 </html>

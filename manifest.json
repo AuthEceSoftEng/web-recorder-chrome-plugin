@@ -17,18 +17,21 @@
 	"16": "icon16.png"
   },
   "permissions": [
+	"storage",
+	"webNavigation",
     "activeTab",
 	"tabs",
 	"http://*/*",
 	"https://*/*"
   ],
   "background": {
-	"scripts": ["background.js"]
+	"scripts": ["background.js"],
+	"persistent": false
   },
   "content_scripts": [
 	{
 		"matches": ["http://*/*", "https://*/*"],
-		"js": ["content.js"]
+		"js": ["jquery-3.2.1.min.js", "content.js"]
 	}
   ]
 }
