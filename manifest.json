@@ -20,13 +20,14 @@
 	"storage",
 	"webNavigation",
     "activeTab",
+	"background",
 	"tabs",
 	"http://*/*",
 	"https://*/*"
   ],
   "background": {
 	"scripts": ["background.js"],
-	"persistent": false
+	"persistent": true
   },
   "content_scripts": [
 	{
