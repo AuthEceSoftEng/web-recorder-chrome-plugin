@@ -1,7 +1,7 @@
 var active = false;
 var empty = true;
 var screen = "start";
-var test_seq = new Array();
+var test_seq = [];
 
 chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 	console.log(req);
@@ -9,11 +9,17 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 		sendResponse({'active': active, 'empty': empty, 'screen': screen});
 	}
 	
+	if (req.action == "append") {
+		empty = false;
+		test_seq.push(req.obj);
+		console.log(test_seq);
+	}
+	
 	if (req.action == "start") {
 		if (!active) {
 			active = true;
 			empty = true;
-			test_seq = new Array();
+			test_seq = [];
 			sendResponse({start: true});
 		}
 	}
