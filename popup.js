@@ -30,7 +30,7 @@ function recorderUI() {
 	this.recorder = new recorderProxy();
 	
 	chrome.runtime.sendMessage({action: "get_status"}, function(response) {
-		console.log(response.active);
+		
 		if (response.active) {
 			ui.startRecording();
 		}
