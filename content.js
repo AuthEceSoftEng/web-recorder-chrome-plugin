@@ -3,12 +3,10 @@ function startRecorder() {
 	var areas = $("area");
 	var buttons = $("button");
 	var forms = $("form");
-	var images = $("img");
 	var inputs = $("input");
 	var menus = $("menu");
 	var menuItems = $("menuitem");
 	var options = $("option");
-	var optgroups = $("optgroup");
 	var selects = $("select");
 	var textareas = $("textarea");
 	var URL = window.location.href;
@@ -18,83 +16,120 @@ function startRecorder() {
 	console.log(areas);
 	console.log(buttons);
 	console.log(forms);
-	console.log(images);
 	console.log(inputs);
 	console.log(menus);
 	console.log(menuItems);
 	console.log(options);
-	console.log(optgroups);
 	console.log(selects);
 	console.log(textareas);
 	console.log(URL);
 	
-	$(document).keypress(function() {
-		console.log(event.which);
+	/*$(document).click(function() {
+		var val = identify(event.target);
+		
+		sendMsg("click", val[0], val[1], "");
 	});
 	
-	anchors.click(function() {
-		if (this.id != "") { 
-			console.log(this.id);
-		}
-		else if (this.name != "") {
-			console.log(this.name);
-		}
-		else if (this.href != "") {
-			console.log(this.href);
-		}
+	$(document).change(function() {
+		var val = identify(event.target);
 		
-		sendMsg("click", "href", this.href, "");
+		sendMsg("change", val[0], val[1], event.target.value);
+	});*/
+	
+	anchors.click(function() {
+		var val = identify(this);
+		
+		sendMsg("click", val[0], val[1], "");
+	});
+	
+	areas.click(function() {
+		var val = identify(this);
+		
+		sendMsg("click", val[0], val[1], "");
 	});
 	
 	buttons.click(function() {
-		if (this.id != "") {
-			console.log(this.id);
-		}
-		else if (this.name != "") {
-			console.log(this.name);
-		}
-		else if (this.title != "") {
-			console.log(this.title);
-		}
-		else if (this.className != "") {
-			console.log(this.className);
-		}
+		var val = identify(this);
+		
+		sendMsg("click", val[0], val[1], "");
 	});
 	
 	forms.submit(function() {
-		console.log("OK");
-	});
-	
-	images.click(function() {
-		if (this.id != "") {
-			console.log(this.id);
-		}
-		else if (this.name != "") {
-			console.log(this.name);
-		}
+		var val = identify(this);
+		
+		sendMsg("submit", val[0], val[1], "");
 	});
 	
 	inputs.click(function() {
-		if (this.id != "") {
-			console.log(this.id);
-		}
-		else if (this.name != "") {
-			console.log(this.name);
-		}
+		var val = identify(this);
+		
+		sendMsg("click", val[0], val[1], "");
 	});
 	
 	inputs.change(function() {
-		alert(this.value);
+		var val = identify(this);
+		
+		sendMsg("change", val[0], val[1], this.value);
+		
+		$(document).keypress(function() {
+			if (event.which == 13) {
+				var val = identify(event.target);
+			
+				sendMsg("enterKey", val[0], val[1], "");
+			}
+		});
+	
 	});
 
 	selects.click(function() {
-		console.log(this.name);
+		var val = identify(this);
+		
+		sendMsg("click", val[0], val[1], "");
 	});
 	
 	selects.change(function() {
-		console.log(this.value);
+		var val = identify(this);
+		
+		sendMsg("change", val[0], val[1], this.value);
 	});
 	
+	textareas.click(function() {
+		var val = identify(this);
+		
+		sendMsg("click", val[0], val[1], "");
+	});
+	
+	textareas.change(function() {
+		var val = identify(this);
+		
+		sendMsg("change", val[0], val[1], this.value);
+	});
+	
+}
+
+function identify(e) {
+	var type, identifier;
+	
+	if (e.id != "") {
+		identifier = e.id;
+		type = "id";
+	}
+	else if (e.name != "") {
+		identifier = e.name;
+		type = "name";
+	}
+	else if (e.href != undefined) {
+		if (e.href != "") {
+			identifier = e.href;
+			type = "linkText";
+		}
+	}
+	else if (e.className != "") {
+		identifier = e.className;
+		type = "className";
+	}
+	
+	return [type, identifier];
 }
 
 function sendMsg(type, identifier, id_value, input_value) {
@@ -117,4 +152,3 @@ chrome.runtime.sendMessage({action: "get_status"}, function(response) {
         startRecorder();
     }
 });
-
