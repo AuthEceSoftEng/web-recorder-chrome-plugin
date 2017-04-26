@@ -17,6 +17,7 @@
 	"16": "icon16.png"
   },
   "permissions": [
+	"unlimitedStorage",
 	"storage",
 	"webNavigation",
     "activeTab",

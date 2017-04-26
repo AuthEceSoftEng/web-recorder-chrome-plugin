@@ -1,3 +1,6 @@
+var currentPage = window.location.href;
+var historyArray = [];
+
 function startRecorder() {
 	var anchors = $("a");
 	var areas = $("area");
@@ -9,7 +12,7 @@ function startRecorder() {
 	var options = $("option");
 	var selects = $("select");
 	var textareas = $("textarea");
-	var URL = window.location.href;
+	currentPage = window.location.href;
 	
 	console.log("Recorder started");
 	console.log(anchors);
@@ -22,7 +25,7 @@ function startRecorder() {
 	console.log(options);
 	console.log(selects);
 	console.log(textareas);
-	console.log(URL);
+	console.log(currentPage);
 	
 	/*$(document).click(function() {
 		var val = identify(event.target);
@@ -54,11 +57,11 @@ function startRecorder() {
 		sendMsg("click", val[0], val[1], "");
 	});
 	
-	forms.submit(function() {
+	/*forms.submit(function() {
 		var val = identify(this);
 		
 		sendMsg("submit", val[0], val[1], "");
-	});
+	});*/
 	
 	inputs.click(function() {
 		var val = identify(this);
@@ -71,13 +74,13 @@ function startRecorder() {
 		
 		sendMsg("change", val[0], val[1], this.value);
 		
-		$(document).keypress(function() {
+		/*$(document).keypress(function() {
 			if (event.which == 13) {
 				var val = identify(event.target);
 			
 				sendMsg("enterKey", val[0], val[1], "");
 			}
-		});
+		});*/
 	
 	});
 
@@ -141,7 +144,7 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 		startRecorder();
 	}
 	
-	if (req.action == "stop"  || req.action == "done") {
+	if ((req.action == "stop" || req.action == "done") && req.clicked == false) {
 		location.reload();
 	}
 	
@@ -151,4 +154,17 @@ chrome.runtime.sendMessage({action: "get_status"}, function(response) {
     if (response.active) {
         startRecorder();
     }
+	
 });
+
+/*setInterval(function() {
+	chrome.runtime.sendMessage({action: "get_status"}, function(response) {
+		if (response.active) {
+			if (currentPage != window.location.href) {
+				currentPage = window.location.href;
+				startRecorder();
+			}
+		}
+    });
+}, 500);*/
+
