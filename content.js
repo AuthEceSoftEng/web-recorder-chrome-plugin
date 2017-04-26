@@ -157,7 +157,7 @@ chrome.runtime.sendMessage({action: "get_status"}, function(response) {
 	
 });
 
-/*setInterval(function() {
+setInterval(function() {
 	chrome.runtime.sendMessage({action: "get_status"}, function(response) {
 		if (response.active) {
 			if (currentPage != window.location.href) {
@@ -166,5 +166,5 @@ chrome.runtime.sendMessage({action: "get_status"}, function(response) {
 			}
 		}
     });
-}, 500);*/
+}, 500);
 

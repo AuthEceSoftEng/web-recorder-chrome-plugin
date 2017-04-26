@@ -23,6 +23,7 @@
     "activeTab",
 	"background",
 	"tabs",
+	"notifications",
 	"http://*/*",
 	"https://*/*"
   ],
