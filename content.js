@@ -1,5 +1,4 @@
 var currentPage = window.location.href;
-var historyArray = [];
 
 function startRecorder() {
 	var anchors = $("a");
