@@ -141,6 +141,7 @@ function sendMsg(type, identifier, id_value, input_value) {
 chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 	if (req.action == "start") {
 		startRecorder();
+		chrome.runtime.sendMessage({action: "append", obj: {type: "get", URL: currentPage}});
 	}
 	
 	if ((req.action == "stop" || req.action == "done") && req.clicked == false) {

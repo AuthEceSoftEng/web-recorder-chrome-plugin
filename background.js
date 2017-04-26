@@ -3,7 +3,6 @@ var empty = true;
 var screen = "start";
 var clicked = false;
 var test_seq = [];
-window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
 
 chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 	
@@ -61,20 +60,11 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 		sendResponse({});
 	}
 	
-	if (req.action == "save") {
-		window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs) {
-			fs.root.getFile('log.txt', {create: true, exclusive: false}, function(fileEntry) {
-				fileEntry.isFile === true;
-				fileEntry.name == 'log.txt';
-				fileEntry.fullPath == 'C:\log.txt';
-			});
-		});
-		
-		console.log(JSON.stringify(test_seq));
-		
+	if (req.action == "save") {	
 		active = false;
 		clicked = false;
 		screen = "save";
+		console.log(JSON.stringify(test_seq));
 		sendResponse({});
 	}
 	
@@ -87,5 +77,4 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 chrome.webNavigation.onHistoryStateUpdated.addListener(function(details) {
 	chrome.tabs.executeScript(null, {file: "content.js"});
 });
-
 
