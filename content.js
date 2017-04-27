@@ -120,15 +120,15 @@ function identify(e) {
 		identifier = e.name;
 		type = "name";
 	}
-	else if (e.href != undefined) {
-		if (e.href != "") {
-			identifier = e.href;
-			type = "linkText";
-		}
-	}
 	else if (e.className != "") {
 		identifier = e.className;
 		type = "className";
+	}
+	else if (e.text != undefined) {
+		if (e.text != "") {
+			identifier = e.text;
+			type = "linkText";
+		}
 	}
 	
 	return [type, identifier];
