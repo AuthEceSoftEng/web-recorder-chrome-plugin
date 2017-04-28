@@ -124,11 +124,9 @@ function identify(e) {
 		identifier = e.className;
 		type = "className";
 	}
-	else if (e.text != undefined) {
-		if (e.text != "") {
-			identifier = e.text;
-			type = "linkText";
-		}
+	else if (e.text != "") {
+		identifier = e.text;
+		type = "linkText";
 	}
 	
 	return [type, identifier];
