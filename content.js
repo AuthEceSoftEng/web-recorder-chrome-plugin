@@ -103,7 +103,11 @@ function startRecorder() {
 function identify(e) {
 	var type, identifier;
 	
-	if (e.id != "") {
+	if (getXPath(e) != "") {
+		identifier = getXPath(e);
+		type = "xpath";
+	}
+	else if (e.id != "") {
 		identifier = e.id;
 		type = "id";
 	}
@@ -123,18 +127,11 @@ function identify(e) {
 		identifier = e.text;
 		type = "linkText";
 	}
-	else if (getXPath(e) != "") {
-		identifier = getXPath(e);
-		type = "xpath";
 	
 	return [type, identifier];
 }
 
-function sendMsg(type, identifier, id_value, input_value) {
-	chrome.runtime.sendMessage({action: "append", obj: {type: type, identifier: identifier, id: id_value, input: input_value}});
-}
-
-var cssSelector = function (target) {
+function cssSelector(target) {
 	var query = '';
 
     if (target == document)
@@ -160,61 +157,46 @@ var cssSelector = function (target) {
 
     return query;
     
-};
+}
 
-function getXPath(node) {
-    var comp, comps = [];
-    var parent = null;
-    var xpath = '';
-    var getPos = function(node) {
-        var position = 1, curNode;
-        if (node.nodeType == Node.ATTRIBUTE_NODE) {
-            return null;
-        }
-        for (curNode = node.previousSibling; curNode; curNode = curNode.previousSibling) {
-            if (curNode.nodeName == node.nodeName) {
-                ++position;
-            }
-        }
-        return position;
-     }
+function getXPath(element) {
+	var path = [];
 
-    if (node instanceof Document) {
-        return '/';
-    }
+	do {
+		if (element.id) {
+			path.unshift('id("' + element.id + '")');
+			break;
+		}
+		else if (element.parentNode) {
+			var nodeName = element.nodeName;
+			var hasNamedSiblings = Boolean(element.previousElementSibling || element.nextElementSibling);
+			var index = 1;
+			var sibling = element;
 
-    for (; node && !(node instanceof Document); node = node.nodeType == Node.ATTRIBUTE_NODE ? node.ownerElement : node.parentNode) {
-        comp = comps[comps.length] = {};
-        switch (node.nodeType) {
-            case Node.TEXT_NODE:
-                comp.name = 'text()';
-                break;
-            case Node.ATTRIBUTE_NODE:
-                comp.name = '@' + node.nodeName;
-                break;
-            case Node.PROCESSING_INSTRUCTION_NODE:
-                comp.name = 'processing-instruction()';
-                break;
-            case Node.COMMENT_NODE:
-                comp.name = 'comment()';
-                break;
-            case Node.ELEMENT_NODE:
-                comp.name = node.nodeName;
-                break;
-        }
-        comp.position = getPos(node);
-    }
+			if (hasNamedSiblings) {
+				while ((sibling = sibling.previousElementSibling)) {
+					if (sibling.nodeName === nodeName) {
+						++index;
+					}
+				}
 
-    for (var i = comps.length - 1; i >= 0; i--) {
-        comp = comps[i];
-        xpath += '/' + comp.name;
-        if (comp.position != null) {
-            xpath += '[' + comp.position + ']';
-        }
-    }
+				path.unshift(nodeName + '[' + index + ']');
+			}
+			else {
+				path.unshift(nodeName);
+			}
+		}
+		else {
+			path.unshift('');
+		}
+	} while ((element = element.parentNode));
 
-    return xpath;
+	return path.join('/');
+	
+}
 
+function sendMsg(type, identifier, id_value, input_value) {
+	chrome.runtime.sendMessage({action: "append", obj: {type: type, identifier: identifier, id: id_value, input: input_value}});
 }
 
 chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
@@ -246,7 +228,5 @@ setInterval(function() {
 		}
     });
 }, 500);
-
-
 
 
