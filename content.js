@@ -69,16 +69,18 @@ function startRecorder() {
 	});
 	
 	inputs.change(function() {
-		var val = identify(this);
-		
-		sendMsg("change", val[0], val[1], this.value);
+		if (this.type != "radio") {
+			var val = identify(this);
+			
+			sendMsg("change", val[0], val[1], this.value);
+		}
 	});
 
-	selects.click(function() {
+	/*selects.click(function() {
 		var val = identify(this);
 		
 		sendMsg("click", val[0], val[1], "");
-	});
+	});*/
 	
 	selects.change(function() {
 		var val = identify(this);
@@ -103,17 +105,17 @@ function startRecorder() {
 function identify(e) {
 	var type, identifier;
 	
-	if (getXPath(e) != "") {
-		identifier = getXPath(e);
-		type = "xpath";
-	}
-	else if (e.id != "") {
+	if (e.id != "") {
 		identifier = e.id;
 		type = "id";
 	}
 	else if (e.name != "") {
 		identifier = e.name;
 		type = "name";
+	}
+	else if (getXPath(e) != "") {
+		identifier = getXPath(e);
+		type = "xpath";
 	}
 	else if (cssSelector(e) != "") {
 		identifier = cssSelector(e).replace(/\\\"/g, '\\\\\\"');
