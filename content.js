@@ -13,19 +13,6 @@ function startRecorder() {
 	var textareas = $("textarea");
 	currentPage = window.location.href;
 	
-	console.log("Recorder started");
-	console.log(anchors);
-	console.log(areas);
-	console.log(buttons);
-	console.log(forms);
-	console.log(inputs);
-	console.log(menus);
-	console.log(menuItems);
-	console.log(options);
-	console.log(selects);
-	console.log(textareas);
-	console.log(currentPage);
-	
 	/*$(document).click(function() {
 		var val = identify(event.target);
 		
@@ -83,9 +70,16 @@ function startRecorder() {
 	});*/
 	
 	selects.change(function() {
-		var val = identify(this);
+		var val = [];
+		val[0] = "css";
+		val[1] = "option[value='" + this.value + "']";
 		
-		sendMsg("change", val[0], val[1], this.value);
+		selects.click(function() {
+			var sec_val = identify(this);
+
+			sendMsg("click", sec_val[0], sec_val[1], "");
+			sendMsg("click", val[0], val[1], "");
+		});
 	});
 	
 	textareas.click(function() {
