@@ -10,6 +10,17 @@ function recorderProxy() {
 	this.active = null;
 }
 
+recorderProxy.prototype.login = function() {
+	chrome.runtime.sendMessage({action: "login", email: document.querySelector('input#fld-email').value, password: document.querySelector('input#fld-password').value}, function(response) {
+		if (response.login) ui.setStarted();
+		else ui.setLoginError();	
+	});
+}
+
+recorderProxy.prototype.logout = function() {
+	chrome.runtime.sendMessage({action: "logout"});
+}
+
 recorderProxy.prototype.start = function() {
 	chrome.runtime.sendMessage({action: "start"});
 }
@@ -35,7 +46,9 @@ function recorderUI() {
 			ui.startRecording();
 		}
 		else {
-			if (response.screen == "start") ui.setStarted();
+			if (response.screen == "login") ui.setLogin();
+			else if (response.screen == "login-error") ui.setLoginError();
+			else if (response.screen == "start") ui.setStarted();
 			else if (response.screen == "done") ui.doneRecording();
 			else if (response.screen == "stop") ui.setStarted();
 			else if (response.screen == "save") ui.saveRecord();
@@ -43,7 +56,32 @@ function recorderUI() {
 	});
 }
 
+recorderUI.prototype.setLogin = function() {
+	dissapear("#scr-start");
+	dissapear("#scr-recording");
+	dissapear("#scr-save");
+	dissapear("#scr-result");
+	dissapear("#scr-error-login");
+	appear("#scr-login");
+}
+
+recorderUI.prototype.setLoginError = function() {
+	dissapear("#scr-login");
+	appear("#scr-error-login");
+}
+
+recorderUI.prototype.setLogout = function() {
+	dissapear("#scr-start");
+	appear("#scr-login");
+	
+	ui.recorder.logout();
+	
+	return false;
+}
+
 recorderUI.prototype.setStarted = function() {
+	dissapear("#scr-login");
+	dissapear("#scr-error-login");
 	dissapear("#scr-recording");
 	dissapear("#scr-save");
 	dissapear("#scr-result");
@@ -98,8 +136,23 @@ recorderUI.prototype.cancelSaving = function() {
 var ui;
 
 window.onload = function() {
+	document.querySelector('button#btn-login').onclick = function() {
+		ui.recorder.login();
+		return false;
+	};
+	
+	document.querySelector('button#btn-error-login').onclick = function() {
+		ui.setLogin();
+		return false;
+	};
+	
 	document.querySelector('button#btn-start').onclick = function() {
 		ui.startRecording();
+		return false;
+	};
+	
+	document.querySelector('a#signout').onclick = function() {
+		ui.setLogout();
 		return false;
 	};
 	

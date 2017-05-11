@@ -18,6 +18,36 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 		}
 	}
 	
+	if (req.action == "login") {
+	
+		$.ajax({
+			type: 'POST',
+			url: 'http://localhost:4000/users/authenticate',
+			data: {
+				email: req.email,
+				password: req.password
+			},
+			success: function(response) {
+				localStorage.setItem('currentUser', JSON.stringify(response));
+				screen: "start";
+				sendResponse({login: true});
+			},
+			error: function() {
+				screen: "login-error";
+				sendResponse({login: false});
+			}
+		});
+			
+		active = false;
+	}
+	
+	if (req.action == "logout") {
+		localStorage.removeItem('currentUser');
+		screen = "login";
+		active = false;
+		sendResponse({});
+	}
+	
 	if (req.action == "start") {
 		if (!active) {
 			chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {

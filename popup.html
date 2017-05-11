@@ -17,15 +17,15 @@
 		<div id="scr-login" class="screen">
 			<form id="form-login" action="" method="post" autocomplete="off">
 				<div class="form-group">
-					<label for="fld-username">E-mail:</label>
-					<input id="fld-username" class="form-control" type="email" placeholder="Email" name="username" required>
+					<label for="fld-email">E-mail:</label>
+					<input id="fld-email" class="form-control" type="email" placeholder="Email" name="email" required>
 				</div>
 				<div class="form-group">
 					<label for="fld-password">Password:</label>
 					<input id="fld-password" class="form-control" type="password" placeholder="Password" name="password" required>
 				</div>
 				<button id="btn-login" class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
-				<a id="btn-signup" class="btn btn-default btn-lg btn-block" href="#" type="button">SignUp</a>
+				<a id="signup" href="http://localhost:4200/sign-up" style="float: right; text-decoration: underline; margin: 3px;" target="_blank">Create a Web Recorder Account</a>
 			</form>
 		</div>
 		<div id="scr-error-login" class="screen">
@@ -34,6 +34,7 @@
 		<div id="scr-start" class="screen">
 			<p class="lead">Click the <strong>Record</strong> button in order to start recording.</p>
 			<button id="btn-start" class="btn btn-danger btn-lg btn-block" type="button">Record</button>
+			<a id="signout" href="#" style="float: right; text-decoration: underline; color: red; margin: 3px;">Logout</a>
 		</div>
 		<div id="scr-recording" class="screen">
 			<p class="lead">You are currently <strong>recording.</strong></p>
