@@ -34,7 +34,7 @@ recorderProxy.prototype.stop = function() {
 }
 
 recorderProxy.prototype.saving = function() {
-	chrome.runtime.sendMessage({action: "save"});
+	chrome.runtime.sendMessage({action: "save", testName: document.querySelector('input#fld-name').value, suiteName: document.querySelector('input#fld-suite').value});
 }
 
 function recorderUI() {

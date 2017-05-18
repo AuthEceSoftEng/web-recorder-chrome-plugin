@@ -29,6 +29,7 @@
 			</form>
 		</div>
 		<div id="scr-error-login" class="screen">
+			<p id="error-login-alert" class="alert alert-danger" role="alert">Incorrect Email or Password.</p>
 			<button id="btn-error-login" class="btn btn-primary btn-lg btn-block" type="button">Try Again</button>
 		</div>
 		<div id="scr-start" class="screen">
@@ -47,8 +48,14 @@
 					<label for="fld-name">Test Name:</label>
 					<input id="fld-name" class="form-control" type="text" placeholder="Test Name" name="name" required>
 				</div>
-				<button id="btn-save" class="btn btn-primary btn-lg btn-block" type="submit">Save This Test</button>	
-				<button id="btn-cancel-save" class="btn btn-danger btn-lg btn-block" type="button">Cancel recording</button>
+				<div class="form-group">
+					<label for="fld-suite">Suite Name:</label>
+					<input id="fld-suite" class="form-control" type="text" placeholder="Suite Name" name="suite" required>
+				</div>
+				<div>
+					<button id="btn-save" class="btn btn-primary btn-lg btn-block" type="submit">Save This Test</button>	
+					<button id="btn-cancel-save" class="btn btn-danger btn-lg btn-block" type="button">Cancel recording</button>
+				</div>
 			</form>
 		</div>
 		<div id="scr-result" class="screen">
