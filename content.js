@@ -4,26 +4,11 @@ function startRecorder() {
 	var anchors = $("a");
 	var areas = $("area");
 	var buttons = $("button");
-	var forms = $("form");
 	var inputs = $("input");
-	var menus = $("menu");
-	var menuItems = $("menuitem");
 	var options = $("option");
 	var selects = $("select");
 	var textareas = $("textarea");
 	currentPage = window.location.href;
-	
-	/*$(document).click(function() {
-		var val = identify(event.target);
-		
-		sendMsg("click", val[0], val[1], "");
-	});
-	
-	$(document).change(function() {
-		var val = identify(event.target);
-		
-		sendMsg("change", val[0], val[1], event.target.value);
-	});*/
 	
 	anchors.click(function() {
 		var val = identify(this);
@@ -43,12 +28,6 @@ function startRecorder() {
 		sendMsg("click", val[0], val[1], "");
 	});
 	
-	/*forms.submit(function() {
-		var val = identify(this);
-		
-		sendMsg("submit", val[0], val[1], "");
-	});*/
-	
 	inputs.click(function() {
 		var val = identify(this);
 		
@@ -56,30 +35,17 @@ function startRecorder() {
 	});
 	
 	inputs.change(function() {
-		if (this.type != "radio") {
+		if (this.type != "radio" && this.type != "checkbox" && this.type != "range") {
 			var val = identify(this);
 			
 			sendMsg("change", val[0], val[1], this.value);
 		}
 	});
-
-	/*selects.click(function() {
-		var val = identify(this);
-		
-		sendMsg("click", val[0], val[1], "");
-	});*/
 	
 	selects.change(function() {
-		var val = [];
-		val[0] = "css";
-		val[1] = "option[value='" + this.value + "']";
+		var val = identify(this);
 		
-		selects.click(function() {
-			var sec_val = identify(this);
-
-			sendMsg("click", sec_val[0], sec_val[1], "");
-			sendMsg("click", val[0], val[1], "");
-		});
+		sendMsg("select", val[0], val[1], this.value);
 	});
 	
 	textareas.click(function() {
@@ -192,13 +158,13 @@ function getXPath(element) {
 }
 
 function sendMsg(type, identifier, id_value, input_value) {
-	chrome.runtime.sendMessage({action: "append", obj: {type: type, identifier: identifier, id: id_value, input: input_value}});
+	chrome.runtime.sendMessage({action: "append", obj: {type: type, identifier: identifier, id: id_value, input: input_value, status: "PENDING", error: ""}});
 }
 
 chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 	if (req.action == "start") {
 		startRecorder();
-		chrome.runtime.sendMessage({action: "append", obj: {type: "get", URL: currentPage}});
+		chrome.runtime.sendMessage({action: "append", obj: {type: "get", URL: currentPage, status: "PENDING", error: ""}});
 	}
 	
 	if ((req.action == "stop" || req.action == "done") && req.clicked == false) {

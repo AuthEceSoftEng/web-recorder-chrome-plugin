@@ -1,8 +1,12 @@
 var active = false;
 var empty = true;
-var screen = "login";
 var clicked = false;
 var test_seq = [];
+
+if (localStorage.getItem('currentUser'))
+	screen = 'start';
+else
+	screen = 'login';
 
 chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 	
