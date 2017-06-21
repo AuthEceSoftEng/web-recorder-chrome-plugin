@@ -2,6 +2,7 @@ var active = false;
 var empty = true;
 var clicked = false;
 var test_seq = [];
+var serverURL = 'http://snf-750380.vm.okeanos.grnet.gr:4000/users/';
 
 if (localStorage.getItem('currentUser'))
 	screen = 'start';
@@ -16,6 +17,7 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 	
 	if (req.action == "append") {
 		empty = false;
+		
 		if (JSON.stringify(test_seq[test_seq.length-1]) != JSON.stringify(req.obj)) {
 			test_seq.push(req.obj);
 			console.log(JSON.stringify(test_seq[test_seq.length-1]));
@@ -28,7 +30,7 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 		$.ajax({
 			async: false,
 			type: 'POST',
-			url: 'http://localhost:4000/users/authenticate',
+			url: serverURL + 'authenticate',
 			data: {
 				email: req.email,
 				password: req.password
@@ -115,7 +117,7 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 				headers: {
 					'Authorization': 'Bearer ' + user.token
 				},
-				url: 'http://localhost:4000/users/' + user._id + '/tests',
+				url: serverURL + user._id + '/tests',
 				data: {
 					_id: user._id,
 					test_name: req.testName,
@@ -129,12 +131,18 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 					state = false;
 				}
 			});
+			
+			if (state) {
+				screen = "start";
+				sendResponse({save: true});
+			} else {
+				screen = "save-error";
+				sendResponse({save: false});
+			}
 				
 			active = false;
 			clicked = false;
-			screen = "save";
 			console.log(JSON.stringify(test_seq));
-			sendResponse({});
 		}
 	
 		if (req.action == "get_array") {
@@ -148,8 +156,4 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 	}
 	
 });
-
-/*chrome.webNavigation.onHistoryStateUpdated.addListener(function(details) {
-	chrome.tabs.executeScript(null, {file: "content.js"});
-});*/
 

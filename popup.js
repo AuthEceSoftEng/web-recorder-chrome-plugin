@@ -34,7 +34,10 @@ recorderProxy.prototype.stop = function() {
 }
 
 recorderProxy.prototype.saving = function() {
-	chrome.runtime.sendMessage({action: "save", testName: document.querySelector('input#fld-name').value, suiteName: document.querySelector('input#fld-suite').value});
+	chrome.runtime.sendMessage({action: "save", testName: document.querySelector('input#fld-name').value, suiteName: document.querySelector('input#fld-suite').value}, function(response) {
+		if (response.save) ui.setResult();
+		else ui.setSaveError();
+	});
 }
 
 function recorderUI() {
@@ -47,11 +50,11 @@ function recorderUI() {
 		}
 		else {
 			if (response.screen == "login") ui.setLogin();
-			else if (response.screen == "login-error") ui.setLoginError();
 			else if (response.screen == "start") ui.setStarted();
 			else if (response.screen == "done") ui.doneRecording();
 			else if (response.screen == "stop") ui.setStarted();
 			else if (response.screen == "save") ui.saveRecord();
+			else if (response.screen == "save-error") ui.setSave();
 		}
 	});
 }
@@ -62,12 +65,35 @@ recorderUI.prototype.setLogin = function() {
 	dissapear("#scr-save");
 	dissapear("#scr-result");
 	dissapear("#scr-error-login");
+	dissapear("#scr-error-save");
 	appear("#scr-login");
 }
 
 recorderUI.prototype.setLoginError = function() {
 	dissapear("#scr-login");
 	appear("#scr-error-login");
+}
+
+recorderUI.prototype.setSave = function() {
+	dissapear("#scr-start");
+	dissapear("#scr-login");
+	dissapear("#scr-error-login");
+	dissapear("#scr-recording");
+	dissapear("#scr-error-save");
+	dissapear("#scr-result");
+	appear("#scr-save");
+}
+
+recorderUI.prototype.setResult = function() {
+	dissapear("#scr-save");
+	dissapear("#scr-error-save");
+	appear("#scr-result");
+}
+
+recorderUI.prototype.setSaveError = function() {
+	dissapear("#scr-save");
+	dissapear("#scr-result");
+	appear("#scr-error-save");
 }
 
 recorderUI.prototype.setLogout = function() {
@@ -82,6 +108,7 @@ recorderUI.prototype.setLogout = function() {
 recorderUI.prototype.setStarted = function() {
 	dissapear("#scr-login");
 	dissapear("#scr-error-login");
+	dissapear("#scr-error-save");
 	dissapear("#scr-recording");
 	dissapear("#scr-save");
 	dissapear("#scr-result");
@@ -167,18 +194,17 @@ window.onload = function() {
 	};
 	
 	document.querySelector('button#btn-save').onclick = function() {
-		ui.saveRecord();
+		ui.recorder.saving();
 		return false;
 	};
+	
+	document.querySelector('button#btn-error-save').onclick = function() {
+		ui.setSave();
+		return false;
+	}
 	
 	document.querySelector('button#btn-cancel-save').onclick = function() {
 		ui.cancelSaving();
-		return false;
-	};
-	
-	document.querySelector('a#btn-result').onclick = function() {
-		ui.setStarted();
-		ui.recorder.stop();
 		return false;
 	};
 	

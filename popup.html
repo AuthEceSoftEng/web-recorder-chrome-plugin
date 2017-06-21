@@ -25,7 +25,7 @@
 					<input id="fld-password" class="form-control" type="password" placeholder="Password" name="password" required>
 				</div>
 				<button id="btn-login" class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
-				<a id="signup" href="http://localhost:4200/sign-up" style="float: right; text-decoration: underline; margin: 3px;" target="_blank">Create a Web Recorder Account</a>
+				<a id="signup" href="http://snf-750380.vm.okeanos.grnet.gr:8080/sign-up" style="float: right; text-decoration: underline; margin: 3px;" target="_blank">Create a Web Recorder Account</a>
 			</form>
 		</div>
 		<div id="scr-error-login" class="screen">
@@ -58,9 +58,13 @@
 				</div>
 			</form>
 		</div>
+		<div id="scr-error-save" class="screen">
+			<p id="error-save-alert" class="alert alert-danger" role="alert">Test name is already in used.</p>
+			<button id="btn-error-save" class="btn btn-primary btn-lg btn-block" type="button">Try Again</button>
+		</div>
 		<div id="scr-result" class="screen">
 			<p class="lead">Your Test has been Uploaded!</p>
-			<a id="btn-result" class="btn btn-info btn-lg btn-block" target="_blank" href="#">View Your Test</a>
+			<a id="btn-result" class="btn btn-info btn-lg btn-block" target="_blank" href="http://snf-750380.vm.okeanos.grnet.gr:8080/dashboard">View Your Test</a>
 		</div>
 	</div>
 	<footer>

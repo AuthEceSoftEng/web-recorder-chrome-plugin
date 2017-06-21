@@ -5,61 +5,225 @@ function startRecorder() {
 	var areas = $("area");
 	var buttons = $("button");
 	var inputs = $("input");
-	var options = $("option");
 	var selects = $("select");
 	var textareas = $("textarea");
 	currentPage = window.location.href;
-	
-	anchors.click(function() {
-		var val = identify(this);
-		
-		sendMsg("click", val[0], val[1], "");
-	});
-	
-	areas.click(function() {
-		var val = identify(this);
-		
-		sendMsg("click", val[0], val[1], "");
-	});
-	
-	buttons.click(function() {
-		var val = identify(this);
-		
-		sendMsg("click", val[0], val[1], "");
-	});
-	
-	inputs.click(function() {
-		var val = identify(this);
-		
-		sendMsg("click", val[0], val[1], "");
-	});
-	
-	inputs.change(function() {
-		if (this.type != "radio" && this.type != "checkbox" && this.type != "range") {
+
+	var promiseClick = new Promise(function(resolve, reject) {
+		anchors.click(function() {
 			var val = identify(this);
 			
-			sendMsg("change", val[0], val[1], this.value);
-		}
-	});
-	
-	selects.change(function() {
-		var val = identify(this);
+			val.push("click");
+			val.push("");
+			
+			resolve(val);
+		});
 		
-		sendMsg("select", val[0], val[1], this.value);
-	});
-	
-	textareas.click(function() {
-		var val = identify(this);
+		anchors.dblclick(function() {
+			var val = identify(this);
+			
+			val.push("db-click");
+			val.push("");
+			
+			resolve(val);
+		});
 		
-		sendMsg("click", val[0], val[1], "");
-	});
-	
-	textareas.change(function() {
-		var val = identify(this);
+		anchors.contextmenu(function() {
+			var val = identify(this);
+			
+			val.push("right-click");
+			val.push("");
+			
+			resolve(val);
+		});
 		
-		sendMsg("change", val[0], val[1], this.value);
+		areas.click(function() {
+			var val = identify(this);
+			val.push("click");
+			val.push("");
+			resolve(val);
+		});
+		
+		areas.dblclick(function() {
+			var val = identify(this);
+			
+			val.push("db-click");
+			val.push("");
+			
+			resolve(val);
+		});
+		
+		areas.contextmenu(function() {
+			var val = identify(this);
+			
+			val.push("right-click");
+			val.push("");
+			
+			resolve(val);
+		});
+		
+		buttons.click(function() {
+			var val = identify(this);
+			
+			val.push("click");
+			val.push("");
+			
+			resolve(val);
+		});
+		
+		buttons.dblclick(function() {
+			var val = identify(this);
+			
+			val.push("db-click");
+			val.push("");
+			
+			resolve(val);
+		});
+		
+		buttons.contextmenu(function() {
+			var val = identify(this);
+			
+			val.push("right-click");
+			val.push("");
+			
+			resolve(val);
+		});
+		
+		inputs.click(function() {
+			var val = identify(this);
+			
+			val.push("click");
+			val.push("");
+			
+			resolve(val);
+		});
+		
+		inputs.dblclick(function() {
+			var val = identify(this);
+			
+			val.push("db-click");
+			val.push("");
+			
+			resolve(val);
+		});
+		
+		inputs.contextmenu(function() {
+			var val = identify(this);
+			
+			val.push("right-click");
+			val.push("");
+			
+			resolve(val);
+		});
+
+		textareas.click(function() {
+			var val = identify(this);
+			
+			val.push("click");
+			val.push("");
+			
+			resolve(val);
+		});
+		
+		textareas.dblclick(function() {
+			var val = identify(this);
+			
+			val.push("db-click");
+			val.push("");
+			
+			resolve(val);
+		});
+		
+		textareas.contextmenu(function() {
+			var val = identify(this);
+			
+			val.push("right-click");
+			val.push("");
+			
+			resolve(val);
+		});
+	
+		$(document).click(function(event) {
+			if (event.target.tagName != "SELECT") {
+				var val = identify(event.target);
+			
+				val.push("click");
+				val.push("");
+			
+				resolve(val);
+			}
+		});
+		
+		$(document).dblclick(function() {
+			var val = identify(this);
+			
+			val.push("db-click");
+			val.push("");
+			
+			resolve(val);
+		});
+		
+		$(document).contextmenu(function() {
+			var val = identify(this);
+			
+			val.push("right-click");
+			val.push("");
+			
+			resolve(val);
+		});
+		
+	}).then(function(result) {
+		sendMsg(result[2], result[0], result[1], result[3]);
+	}).then(function() {
+		setTimeout(function() { startRecorder(); }, 100);
 	});
 	
+	var promiseChange = new Promise(function(resolve, reject) {
+		inputs.change(function() {
+			if (this.type != "radio" && this.type != "checkbox" && this.type != "range") {
+				var val = identify(this);
+				
+				val.push("change");
+				val.push(this.value);
+				
+				resolve(val);
+			}
+		});
+		
+		selects.change(function() {
+			var val = identify(this);
+			
+			val.push("select");
+			val.push(this.value);
+			
+			resolve(val);
+		});
+		
+		textareas.change(function() {
+			var val = identify(this);
+			
+			val.push("change");
+			val.push(this.value);
+			
+			resolve(val);
+		});
+		
+		$(document).change(function(event) {
+			if (event.target.type != "radio" && event.target.type != "checkbox" && event.target.type != "range") {
+				var val = identify(event.target);
+				
+				val.push("change");
+				val.push(event.target.value);
+				
+				resolve(val);
+			}
+		});
+		
+	}).then(function(result) {
+		sendMsg(result[2], result[0], result[1], result[3]);
+	}).then(function() {
+		setTimeout(function() { startRecorder(); }, 100);
+	});
 }
 
 function identify(e) {
@@ -69,10 +233,6 @@ function identify(e) {
 		identifier = e.id;
 		type = "id";
 	}
-	else if (e.name != "") {
-		identifier = e.name;
-		type = "name";
-	}
 	else if (getXPath(e) != "") {
 		identifier = getXPath(e);
 		type = "xpath";
@@ -80,6 +240,10 @@ function identify(e) {
 	else if (cssSelector(e) != "") {
 		identifier = cssSelector(e).replace(/\\\"/g, '\\\\\\"');
 		type = "css";
+	}
+	else if (e.name != "") {
+		identifier = e.name;
+		type = "name";
 	}
 	else if (e.className != "") {
 		identifier = e.className;
