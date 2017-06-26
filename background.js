@@ -83,6 +83,7 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 				active = true;
 				empty = true;
 				clicked = false;
+				asserting = false;
 				test_seq = [];
 				screen = "rec";
 				sendResponse({start: true});
@@ -98,6 +99,7 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 			});
 		
 			active = false;
+			asserting = false;
 			screen = "stop";
 			sendResponse({});
 		}
@@ -111,6 +113,7 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 			});
 		
 			active = false;
+			asserting = false;
 			screen = "done";
 			sendResponse({});
 		}
