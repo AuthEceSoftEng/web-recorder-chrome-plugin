@@ -39,8 +39,12 @@
 		</div>
 		<div id="scr-recording" class="screen">
 			<p class="lead">You are currently <strong>recording.</strong></p>
+			<p>
+				<button id="btn-operations" class="btn btn-primary" disabled="disabled" type="button" style="white-space: normal;">Record Operations</button>
+				<button id="btn-assertions" class="btn btn-primary" type="button" style="white-space: normal;">Make Assertions</button>
+			</p>
 			<button id="btn-done"  class="btn btn-success btn-lg btn-block" type="button">Finish Recording</button>
-			<button id="btn-cancel-record"class="btn btn-danger btn-lg btn-block" type="button">Cancel Recording</button>	
+			<a id="cancel-record" href="#" style="float: right; text-decoration: underline; color: red; margin: 3px;">Cancel Recording</a>	
 		</div>
 		<div id="scr-save" class="screen">
 			<form id="form-save" action="" method="post" autocomplete="off">

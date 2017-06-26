@@ -1,4 +1,13 @@
+var assertionsClickHandler = function (element) {
+	var val = identify(element);
+	
+	chrome.runtime.sendMessage({action: "append_assertion", obj: {type: "present", identifier: val[0], id: val[1], input: "", status: "PENDING", error: ""}});
+	assertions.start();
+}
+
+var assertions = DomOutline({ onClick: assertionsClickHandler });
 var currentPage = window.location.href;
+var asserting = false;
 
 function startRecorder() {
 	var anchors = $("a");
@@ -8,7 +17,11 @@ function startRecorder() {
 	var selects = $("select");
 	var textareas = $("textarea");
 	currentPage = window.location.href;
-
+	
+	$(document).click(function(event) {
+		if (asserting) event.preventDefault();
+	});
+	
 	var promiseClick = new Promise(function(resolve, reject) {
 		anchors.click(function() {
 			var val = identify(this);
@@ -333,6 +346,16 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 	
 	if ((req.action == "stop" || req.action == "done") && req.clicked == false) {
 		location.reload();
+	}
+	
+	if (req.action == "operations") {
+		asserting = false;
+		assertions.stop();
+	}
+	
+	if (req.action == "assertions") {
+		asserting = true;
+		assertions.start();
 	}
 	
 });

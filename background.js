@@ -1,6 +1,7 @@
 var active = false;
 var empty = true;
 var clicked = false;
+var asserting = false;
 var test_seq = [];
 var serverURL = 'http://snf-750380.vm.okeanos.grnet.gr:4000/users/';
 
@@ -12,12 +13,19 @@ else
 chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 	
 	if (req.action == "get_status") {
-		sendResponse({'active': active, 'empty': empty, 'screen': screen});
+		sendResponse({'active': active, 'empty': empty, 'screen': screen, 'assertions': asserting});
 	}
 	
 	if (req.action == "append") {
 		empty = false;
 		
+		if (JSON.stringify(test_seq[test_seq.length-1]) != JSON.stringify(req.obj) && asserting == false) {
+			test_seq.push(req.obj);
+			console.log(JSON.stringify(test_seq[test_seq.length-1]));
+		}
+	}
+	
+	if (req.action == "append_assertion") {
 		if (JSON.stringify(test_seq[test_seq.length-1]) != JSON.stringify(req.obj)) {
 			test_seq.push(req.obj);
 			console.log(JSON.stringify(test_seq[test_seq.length-1]));
@@ -104,6 +112,28 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 		
 			active = false;
 			screen = "done";
+			sendResponse({});
+		}
+		
+		if (req.action == "operations") {
+			chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+				for (var i = 0; i < tabs.length; i++) {
+					chrome.tabs.sendMessage(tabs[i].id, {action: "operations"});
+				}
+			});
+			
+			asserting = false;
+			sendResponse({});
+		}
+		
+		if (req.action == "assertions") {
+			chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+				for (var i = 0; i < tabs.length; i++) {
+					chrome.tabs.sendMessage(tabs[i].id, {action: "assertions"});
+				}
+			});
+			
+			asserting = true;
 			sendResponse({});
 		}
 	

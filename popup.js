@@ -29,6 +29,14 @@ recorderProxy.prototype.done = function() {
 	chrome.runtime.sendMessage({action: "done"});
 }
 
+recorderProxy.prototype.operating = function() {
+	chrome.runtime.sendMessage({action: "operations"});
+}
+
+recorderProxy.prototype.asserting = function() {
+	chrome.runtime.sendMessage({action: "assertions"});
+}
+
 recorderProxy.prototype.stop = function() {
 	chrome.runtime.sendMessage({action: "stop"});
 }
@@ -47,6 +55,9 @@ function recorderUI() {
 		
 		if (response.active) {
 			ui.startRecording();
+			
+			if (response.assertions) ui.asserting();
+			else ui.operating();
 		}
 		else {
 			if (response.screen == "login") ui.setLogin();
@@ -82,6 +93,16 @@ recorderUI.prototype.setSave = function() {
 	dissapear("#scr-error-save");
 	dissapear("#scr-result");
 	appear("#scr-save");
+}
+
+recorderUI.prototype.operating = function() {
+	document.getElementById("btn-operations").setAttribute("disabled", "disabled");
+	document.getElementById("btn-assertions").removeAttribute("disabled");
+}
+
+recorderUI.prototype.asserting = function() {
+	document.getElementById("btn-assertions").setAttribute("disabled", "disabled");
+	document.getElementById("btn-operations").removeAttribute("disabled");
 }
 
 recorderUI.prototype.setResult = function() {
@@ -174,6 +195,7 @@ window.onload = function() {
 	};
 	
 	document.querySelector('button#btn-start').onclick = function() {
+		window.close();
 		ui.startRecording();
 		return false;
 	};
@@ -188,7 +210,22 @@ window.onload = function() {
 		return false;
 	};
 	
-	document.querySelector('button#btn-cancel-record').onclick = function() {
+	document.querySelector('button#btn-operations').onclick = function() {
+		window.close();
+		ui.operating();
+		ui.recorder.operating();
+		return false;
+	};
+	
+	document.querySelector('button#btn-assertions').onclick = function() {
+		window.close();
+		ui.asserting();
+		ui.recorder.asserting();
+		return false;
+	};
+	
+	document.querySelector('a#cancel-record').onclick = function() {
+		window.close();
 		ui.cancelRecording();
 		return false;
 	};
@@ -204,6 +241,7 @@ window.onload = function() {
 	}
 	
 	document.querySelector('button#btn-cancel-save').onclick = function() {
+		window.close();
 		ui.cancelSaving();
 		return false;
 	};

@@ -34,7 +34,7 @@
   "content_scripts": [
 	{
 		"matches": ["http://*/*", "https://*/*"],
-		"js": ["jquery-3.2.1.min.js", "content.js"]
+		"js": ["jquery-3.2.1.min.js", "jquery.dom-outline-1.0.js", "content.js"]
 	}
   ]
 }
