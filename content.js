@@ -1,7 +1,7 @@
 var assertionsClickHandler = function (element) {
 	var val = identify(element);
 	
-	chrome.runtime.sendMessage({action: "append_assertion", obj: {type: "present", identifier: val[0], id: val[1], input: "", status: "PENDING", error: ""}});
+	chrome.runtime.sendMessage({action: "append_assertion", obj: {type: "present", identifier: val[0], id: val[1], input: "", url: window.location.href, status: "PENDING", error: ""}});
 	assertions.start();
 }
 
