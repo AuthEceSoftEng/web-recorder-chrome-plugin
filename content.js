@@ -28,6 +28,7 @@ function startRecorder() {
 			
 			val.push("click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -37,6 +38,7 @@ function startRecorder() {
 			
 			val.push("db-click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -46,14 +48,18 @@ function startRecorder() {
 			
 			val.push("right-click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
 		
 		areas.click(function() {
 			var val = identify(this);
+			
 			val.push("click");
 			val.push("");
+			val.push(window.location.href);
+			
 			resolve(val);
 		});
 		
@@ -62,6 +68,7 @@ function startRecorder() {
 			
 			val.push("db-click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -71,6 +78,7 @@ function startRecorder() {
 			
 			val.push("right-click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -80,6 +88,7 @@ function startRecorder() {
 			
 			val.push("click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -89,6 +98,7 @@ function startRecorder() {
 			
 			val.push("db-click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -98,6 +108,7 @@ function startRecorder() {
 			
 			val.push("right-click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -107,6 +118,7 @@ function startRecorder() {
 			
 			val.push("click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -116,6 +128,7 @@ function startRecorder() {
 			
 			val.push("db-click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -125,6 +138,7 @@ function startRecorder() {
 			
 			val.push("right-click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -134,6 +148,7 @@ function startRecorder() {
 			
 			val.push("click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -143,6 +158,7 @@ function startRecorder() {
 			
 			val.push("db-click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -152,6 +168,7 @@ function startRecorder() {
 			
 			val.push("right-click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -162,6 +179,7 @@ function startRecorder() {
 			
 				val.push("click");
 				val.push("");
+				val.push(window.location.href);
 			
 				resolve(val);
 			}
@@ -172,6 +190,7 @@ function startRecorder() {
 			
 			val.push("db-click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -181,12 +200,13 @@ function startRecorder() {
 			
 			val.push("right-click");
 			val.push("");
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
 		
 	}).then(function(result) {
-		sendMsg(result[2], result[0], result[1], result[3]);
+		sendMsg(result[2], result[0], result[1], result[3], result[4]);
 	}).then(function() {
 		setTimeout(function() { startRecorder(); }, 100);
 	});
@@ -198,6 +218,7 @@ function startRecorder() {
 				
 				val.push("change");
 				val.push(this.value);
+				val.push(window.location.href);
 				
 				resolve(val);
 			}
@@ -208,6 +229,7 @@ function startRecorder() {
 			
 			val.push("select");
 			val.push(this.value);
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -217,6 +239,7 @@ function startRecorder() {
 			
 			val.push("change");
 			val.push(this.value);
+			val.push(window.location.href);
 			
 			resolve(val);
 		});
@@ -227,13 +250,14 @@ function startRecorder() {
 				
 				val.push("change");
 				val.push(event.target.value);
+				val.push(window.location.href);
 				
 				resolve(val);
 			}
 		});
 		
 	}).then(function(result) {
-		sendMsg(result[2], result[0], result[1], result[3]);
+		sendMsg(result[2], result[0], result[1], result[3], result[4]);
 	}).then(function() {
 		setTimeout(function() { startRecorder(); }, 100);
 	});
@@ -334,8 +358,8 @@ function getXPath(element) {
 	
 }
 
-function sendMsg(type, identifier, id_value, input_value) {
-	chrome.runtime.sendMessage({action: "append", obj: {type: type, identifier: identifier, id: id_value, input: input_value, status: "PENDING", error: ""}});
+function sendMsg(type, identifier, id_value, input_value, url) {
+	chrome.runtime.sendMessage({action: "append", obj: {type: type, identifier: identifier, id: id_value, input: input_value, url: url, status: "PENDING", error: ""}});
 }
 
 chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
