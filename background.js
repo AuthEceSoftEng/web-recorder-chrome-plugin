@@ -3,7 +3,7 @@ var empty = true;
 var clicked = false;
 var asserting = false;
 var test_seq = [];
-var serverURL = 'http://snf-750380.vm.okeanos.grnet.gr:4000/users/';
+var serverURL = 'http://localhost:4000/';
 
 if (localStorage.getItem('currentUser'))
 	screen = 'start';
@@ -141,41 +141,43 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 		}
 	
 		if (req.action == "save") {
-			var state;
-			var user = JSON.parse(localStorage.getItem('currentUser'));
+			if (req.testName != "" && req.suiteName != "") {
+				var state;
+				var user = JSON.parse(localStorage.getItem('currentUser'));
 			
-			$.ajax({
-				async: false,
-				type: 'POST',
-				headers: {
-					'Authorization': 'Bearer ' + user.token
-				},
-				url: serverURL + user._id + '/tests',
-				data: {
-					_id: user._id,
-					test_name: req.testName,
-					suite_name: req.suiteName,
-					test_obj: JSON.stringify(test_seq)
-				},
-				success: function(response) {
-					state = true;
-				},
-				error: function() {
-					state = false;
+				$.ajax({
+					async: false,
+					type: 'POST',
+					headers: {
+						'Authorization': 'Bearer ' + user.token
+					},
+					url: serverURL + user._id + '/tests',
+					data: {
+						_id: user._id,
+						test_name: req.testName,
+						suite_name: req.suiteName,
+						test_obj: JSON.stringify(test_seq)
+					},
+					success: function(response) {
+						state = true;
+					},
+					error: function() {
+						state = false;
+					}
+				});
+			
+				if (state) {
+					screen = "start";
+					sendResponse({save: true});
+				} else {
+					screen = "save-error";
+					sendResponse({save: false});
 				}
-			});
-			
-			if (state) {
-				screen = "start";
-				sendResponse({save: true});
-			} else {
-				screen = "save-error";
-				sendResponse({save: false});
-			}
 				
-			active = false;
-			clicked = false;
-			console.log(JSON.stringify(test_seq));
+				active = false;
+				clicked = false;
+				console.log(JSON.stringify(test_seq));
+			}
 		}
 	
 		if (req.action == "get_array") {

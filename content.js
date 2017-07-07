@@ -1,7 +1,7 @@
 var assertionsClickHandler = function (element) {
 	var val = identify(element);
 	
-	chrome.runtime.sendMessage({action: "append_assertion", obj: {type: "present", identifier: val[0], id: val[1], input: "", url: window.location.href, status: "PENDING", error: ""}});
+	chrome.runtime.sendMessage({action: "append_assertion", obj: {type: "present", identifier: val[0], id: val[1], input: "", url: window.location.href, status: "PENDING", error: "", description: ""}});
 	assertions.start();
 }
 
@@ -359,13 +359,13 @@ function getXPath(element) {
 }
 
 function sendMsg(type, identifier, id_value, input_value, url) {
-	chrome.runtime.sendMessage({action: "append", obj: {type: type, identifier: identifier, id: id_value, input: input_value, url: url, status: "PENDING", error: ""}});
+	chrome.runtime.sendMessage({action: "append", obj: {type: type, identifier: identifier, id: id_value, input: input_value, url: url, status: "PENDING", error: "", description: ""}});
 }
 
 chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 	if (req.action == "start") {
 		startRecorder();
-		chrome.runtime.sendMessage({action: "append", obj: {type: "get", URL: currentPage, status: "PENDING", error: ""}});
+		chrome.runtime.sendMessage({action: "append", obj: {type: "get", id: "", URL: currentPage, status: "PENDING", error: "", description: ""}});
 	}
 	
 	if ((req.action == "stop" || req.action == "done") && req.clicked == false) {

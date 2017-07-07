@@ -1,3 +1,7 @@
+var testName;
+var suiteName;
+var websiteURL = 'http://localhost:4200/';
+
 function appear(screen) {
 	return document.querySelector(screen).style.display = "block";
 }
@@ -42,7 +46,10 @@ recorderProxy.prototype.stop = function() {
 }
 
 recorderProxy.prototype.saving = function() {
-	chrome.runtime.sendMessage({action: "save", testName: document.querySelector('input#fld-name').value, suiteName: document.querySelector('input#fld-suite').value}, function(response) {
+	testName = document.querySelector('input#fld-name').value;
+	suiteName = document.querySelector('select#fld-suite').value;
+	
+	chrome.runtime.sendMessage({action: "save", testName: document.querySelector('input#fld-name').value, suiteName: document.querySelector('select#fld-suite').value}, function(response) {
 		if (response.save) ui.setResult();
 		else ui.setSaveError();
 	});
@@ -246,6 +253,33 @@ window.onload = function() {
 		return false;
 	};
 	
+	document.querySelector('a#btn-result').onclick = function() {
+		document.getElementById('btn-result').setAttribute('href', websiteURL + 'dashboard/suites/' + suiteName + '/tests/' + testName);
+	}
+	
 	ui = new recorderUI();
 }
+
+$(function() {
+	var user = JSON.parse(localStorage.getItem('currentUser'));
+	
+	$.ajax({
+		type: "GET",
+		headers: {
+			'Authorization': 'Bearer ' + user.token
+		},
+		url: "http://localhost:4000/" + user._id + '/suiteNames',
+		success: function(data) {
+			var select = document.getElementById('fld-suite');
+			
+			data = data.sort(function(a, b) {
+				return a.localeCompare(b);
+			});
+			
+			for (var i in data) {
+				$(select).append('<option value=' + data[i] + '>' + data[i] + '</option>');
+			}
+		}
+	});
+});
 

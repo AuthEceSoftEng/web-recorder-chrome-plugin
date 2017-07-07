@@ -54,7 +54,7 @@
 				</div>
 				<div class="form-group">
 					<label for="fld-suite">Suite Name:</label>
-					<input id="fld-suite" class="form-control" type="text" placeholder="Suite Name" name="suite" required>
+					<select id="fld-suite" class="selectpicker form-control"></select>
 				</div>
 				<div>
 					<button id="btn-save" class="btn btn-primary btn-lg btn-block" type="submit">Save This Test</button>	
@@ -68,7 +68,7 @@
 		</div>
 		<div id="scr-result" class="screen">
 			<p class="lead">Your Test has been Uploaded!</p>
-			<a id="btn-result" class="btn btn-info btn-lg btn-block" target="_blank" href="http://snf-750380.vm.okeanos.grnet.gr:8080/dashboard">View Your Test</a>
+			<a id="btn-result" class="btn btn-info btn-lg btn-block" target="_blank">View Your Test</a>
 		</div>
 	</div>
 	<footer>
@@ -76,6 +76,7 @@
 		</small>
 	</footer>
 	
+	<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="popup.js"></script>
   </body>
 </html>
