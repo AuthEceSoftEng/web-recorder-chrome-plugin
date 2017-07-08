@@ -1,6 +1,6 @@
 var testName;
 var suiteName;
-var websiteURL = 'http://localhost:4200/';
+var websiteURL = 'http://snf-750380.vm.okeanos.grnet.gr:8080/';
 
 function appear(screen) {
 	return document.querySelector(screen).style.display = "block";
@@ -268,7 +268,7 @@ $(function() {
 		headers: {
 			'Authorization': 'Bearer ' + user.token
 		},
-		url: "http://localhost:4000/" + user._id + '/suiteNames',
+		url: "http://snf-750380.vm.okeanos.grnet.gr:4000/" + user._id + '/suiteNames',
 		success: function(data) {
 			var select = document.getElementById('fld-suite');
 			
