@@ -6,3 +6,7 @@ Your browser tests are going to mimic a user's journey through your website or a
 More information about the functionality of the extension can be found [here][documentation].
 
 [documentation]: http://snf-750380.vm.okeanos.grnet.gr:8080/documentation
+
+## Installation
+In order to install the Web Recorder Chrome Extension you have to follow these steps:
+1. Download and extract the repository
