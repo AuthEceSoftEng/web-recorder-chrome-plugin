@@ -21,3 +21,5 @@ Now you have successfully installed the extension in your PC. You'll see a Web R
 If you want to use the Extension with your own server you have to modify some files and then refresh the Extension page (step 2 from installation). The files that you have to modify are:
 1) background.js (serverURL)
 2) popup.js (websiteURL, serverURL)
+
+  % bin/hubot
