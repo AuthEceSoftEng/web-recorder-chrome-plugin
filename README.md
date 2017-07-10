@@ -22,4 +22,4 @@ If you want to use the Extension with your own server you have to modify some fi
 1) background.js (serverURL)
 2) popup.js (websiteURL, serverURL)
 
-  % bin/hubot
+`% bin/hubot` 
