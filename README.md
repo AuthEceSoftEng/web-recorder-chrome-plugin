@@ -3,4 +3,6 @@ Web Recorder is an automated website testing and monitoring service that checks 
 
 Your browser tests are going to mimic a user's journey through your website or application, so why not create them via your own journey? Web Recorder provides a free Chrome recorder extension that allows you to record operations and assertions right in your web browser. Once you're done recording a test, it's saved to our cloud service. At that point, you can view, edit and automate the test within your account.
 
-More information about the functionality of the extension can be found [here]: http://snf-750380.vm.okeanos.grnet.gr:8080/documentation
+More information about the functionality of the extension can be found [here][documentation].
+
+[documentation]: http://snf-750380.vm.okeanos.grnet.gr:8080/documentation
