@@ -9,12 +9,11 @@ More information about the functionality of the extension can be found [here][do
 
 ## Installation
 In order to install the Web Recorder Chrome Extension you have to follow these steps:
-1) Download and extract the repository locally in your PC.
-2) Go to Chrome -> More Tools -> Extensions.
+1) Download and extract the repository locally in your PC
+2) Go to Chrome -> More Tools -> Extensions
 3) Enable Developer Mode
 4) Click Load unpacked extension...
-5) Navigate to the downloaded repository.
-6) Click Open
+5) Navigate to the downloaded repository and click open
 
 Now you have successfully installed the extension in your PC. You'll see a Web Recorder Extension icon in your toolbar.
 
