@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
 	
 	if (req.action == "append") {
 		empty = false;
-		
+		//console.log(JSON.stringify(req.obj));
 		if (JSON.stringify(test_seq[test_seq.length-1]) != JSON.stringify(req.obj) && asserting == false) {
 			test_seq.push(req.obj);
 			console.log(JSON.stringify(test_seq[test_seq.length-1]));

@@ -205,15 +205,9 @@ function startRecorder() {
 			resolve(val);
 		});
 		
-	}).then(function(result) {
-		sendMsg(result[2], result[0], result[1], result[3], result[4]);
-	}).then(function() {
-		setTimeout(function() { startRecorder(); }, 100);
-	});
-	
-	var promiseChange = new Promise(function(resolve, reject) {
 		inputs.change(function() {
 			if (this.type != "radio" && this.type != "checkbox" && this.type != "range") {
+			console.log('input');
 				var val = identify(this);
 				
 				val.push("change");
@@ -225,6 +219,7 @@ function startRecorder() {
 		});
 		
 		selects.change(function() {
+		console.log('select');
 			var val = identify(this);
 			
 			val.push("select");
@@ -235,6 +230,7 @@ function startRecorder() {
 		});
 		
 		textareas.change(function() {
+		console.log('textarea');
 			var val = identify(this);
 			
 			val.push("change");
@@ -253,6 +249,63 @@ function startRecorder() {
 				val.push(window.location.href);
 				
 				resolve(val);
+				console.log('document');
+			}
+		});
+		
+	}).then(function(result) {
+		sendMsg(result[2], result[0], result[1], result[3], result[4]);
+	}).then(function() {
+		startRecorder();
+		//setTimeout(function() { startRecorder(); }, 0.0001);
+	});
+	
+	/*var promiseChange = new Promise(function(resolve, reject) {
+		inputs.change(function() {
+			if (this.type != "radio" && this.type != "checkbox" && this.type != "range") {
+			console.log('input');
+				var val = identify(this);
+				
+				val.push("change");
+				val.push(this.value);
+				val.push(window.location.href);
+				
+				resolve(val);
+			}
+		});
+		
+		selects.change(function() {
+		console.log('select');
+			var val = identify(this);
+			
+			val.push("select");
+			val.push(this.value);
+			val.push(window.location.href);
+			
+			resolve(val);
+		});
+		
+		textareas.change(function() {
+		console.log('textarea');
+			var val = identify(this);
+			
+			val.push("change");
+			val.push(this.value);
+			val.push(window.location.href);
+			
+			resolve(val);
+		});
+		
+		$(document).change(function(event) {
+			if (event.target.type != "radio" && event.target.type != "checkbox" && event.target.type != "range") {
+				var val = identify(event.target);
+				
+				val.push("change");
+				val.push(event.target.value);
+				val.push(window.location.href);
+				
+				resolve(val);
+				console.log('document');
 			}
 		});
 		
@@ -260,7 +313,7 @@ function startRecorder() {
 		sendMsg(result[2], result[0], result[1], result[3], result[4]);
 	}).then(function() {
 		setTimeout(function() { startRecorder(); }, 100);
-	});
+	});*/
 }
 
 function identify(e) {
@@ -391,7 +444,7 @@ chrome.runtime.sendMessage({action: "get_status"}, function(response) {
 	
 });
 
-setInterval(function() {
+/*setInterval(function() {
 	chrome.runtime.sendMessage({action: "get_status"}, function(response) {
 		if (response.active) {
 			if (currentPage != window.location.href) {
@@ -400,6 +453,6 @@ setInterval(function() {
 			}
 		}
     });
-}, 500);
+}, 500);*/
 
 
