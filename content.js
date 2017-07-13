@@ -2,6 +2,7 @@ var assertionsClickHandler = function (element) {
 	var val = identify(element);
 	
 	chrome.runtime.sendMessage({action: "append_assertion", obj: {type: "present", identifier: val[0], id: val[1], input: "", url: window.location.href, status: "PENDING", error: "", description: ""}});
+	
 	assertions.start();
 }
 
@@ -19,10 +20,16 @@ function startRecorder() {
 	currentPage = window.location.href;
 	
 	$(document).click(function(event) {
-		if (asserting) event.preventDefault();
+		if (asserting){
+			console.log(event);
+			event.preventDefault();
+			event.stopImmediatePropagation();
+			event.stopPropagation();
+			$('a').off('click');
+		}
 	});
 	
-	var promiseClick = new Promise(function(resolve, reject) {
+	var promise = new Promise(function(resolve, reject) {
 		anchors.click(function() {
 			var val = identify(this);
 			
@@ -207,7 +214,6 @@ function startRecorder() {
 		
 		inputs.change(function() {
 			if (this.type != "radio" && this.type != "checkbox" && this.type != "range") {
-			console.log('input');
 				var val = identify(this);
 				
 				val.push("change");
@@ -219,7 +225,6 @@ function startRecorder() {
 		});
 		
 		selects.change(function() {
-		console.log('select');
 			var val = identify(this);
 			
 			val.push("select");
@@ -230,7 +235,6 @@ function startRecorder() {
 		});
 		
 		textareas.change(function() {
-		console.log('textarea');
 			var val = identify(this);
 			
 			val.push("change");
@@ -249,7 +253,6 @@ function startRecorder() {
 				val.push(window.location.href);
 				
 				resolve(val);
-				console.log('document');
 			}
 		});
 		
