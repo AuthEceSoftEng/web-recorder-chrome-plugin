@@ -415,7 +415,7 @@ function getXPath(element) {
 }
 
 function sendMsg(type, identifier, id_value, input_value, url) {
-	chrome.runtime.sendMessage({action: "append", obj: {type: type, identifier: identifier, id: id_value, input: input_value, url: url, status: "PENDING", error: "", description: ""}});
+	chrome.runtime.sendMessage({action: "append", obj: {type: type, identifier: identifier, id: id_value, input: input_value, inputType: "freetext", url: url, status: "PENDING", error: "", description: ""}});
 }
 
 chrome.runtime.onMessage.addListener(function(req, send, sendResponse) {
