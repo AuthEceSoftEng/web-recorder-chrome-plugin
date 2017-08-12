@@ -1,7 +1,7 @@
 var testName;
 var suiteName;
-var websiteURL = 'http://snf-750380.vm.okeanos.grnet.gr:8080/';
-var serverURL = 'http://snf-750380.vm.okeanos.grnet.gr:4000/';
+var websiteURL = 'http://snf-766614.vm.okeanos.grnet.gr:8080/';
+var serverURL = 'http://snf-766614.vm.okeanos.grnet.gr:4000/';
 
 function appear(screen) {
 	return document.querySelector(screen).style.display = "block";
