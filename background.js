@@ -3,7 +3,7 @@ var empty = true;
 var clicked = false;
 var asserting = false;
 var test_seq = [];
-var serverURL = 'http://snf-750380.vm.okeanos.grnet.gr:4000/';
+var serverURL = 'http://snf-766614.vm.okeanos.grnet.gr:4000/';
 
 if (localStorage.getItem('currentUser'))
 	screen = 'start';
