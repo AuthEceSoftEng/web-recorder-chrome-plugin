@@ -5,7 +5,7 @@ Your browser tests are going to mimic a user's journey through your website or a
 
 More information about the functionality of the extension can be found [here][documentation].
 
-[documentation]: http://snf-750380.vm.okeanos.grnet.gr:8080/documentation
+[documentation]: http://snf-766614.vm.okeanos.grnet.gr:8080/documentation
 
 ## Installation
 In order to install the Web Recorder Chrome Extension you have to follow these steps:
@@ -26,7 +26,7 @@ If you want to use the Extension with your own server you have to modify some fi
     var clicked = false;
     var asserting = false;
     var test_seq = [];
-    var serverURL = 'http://snf-750380.vm.okeanos.grnet.gr:4000/';
+    var serverURL = 'http://snf-766614.vm.okeanos.grnet.gr:4000/';
 
     if (localStorage.getItem('currentUser'))
       screen = 'start';
@@ -38,8 +38,8 @@ If you want to use the Extension with your own server you have to modify some fi
    ```
     var testName;
     var suiteName;
-    var websiteURL = 'http://snf-750380.vm.okeanos.grnet.gr:8080/';
-    var serverURL = 'http://snf-750380.vm.okeanos.grnet.gr:4000/';
+    var websiteURL = 'http://snf-766614.vm.okeanos.grnet.gr:8080/';
+    var serverURL = 'http://snf-766614.vm.okeanos.grnet.gr:4000/';
 
     function appear(screen) {
       return document.querySelector(screen).style.display = "block";
