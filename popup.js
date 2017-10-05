@@ -1,6 +1,6 @@
 var testName;
 var suiteName;
-var websiteURL = 'http://snf-766614.vm.okeanos.grnet.gr:8080/';
+var websiteURL = 'http://snf-766614.vm.okeanos.grnet.gr/';
 var serverURL = 'http://snf-766614.vm.okeanos.grnet.gr:4000/';
 
 function appear(screen) {
