@@ -7,7 +7,7 @@ function appear(screen) {
 	return document.querySelector(screen).style.display = "block";
 }
 
-function dissapear(screen) {
+function disappear(screen) {
 	return document.querySelector(screen).style.display = "none";
 }
 
@@ -79,27 +79,27 @@ function recorderUI() {
 }
 
 recorderUI.prototype.setLogin = function() {
-	dissapear("#scr-start");
-	dissapear("#scr-recording");
-	dissapear("#scr-save");
-	dissapear("#scr-result");
-	dissapear("#scr-error-login");
-	dissapear("#scr-error-save");
+	disappear("#scr-start");
+	disappear("#scr-recording");
+	disappear("#scr-save");
+	disappear("#scr-result");
+	disappear("#scr-error-login");
+	disappear("#scr-error-save");
 	appear("#scr-login");
 }
 
 recorderUI.prototype.setLoginError = function() {
-	dissapear("#scr-login");
+	disappear("#scr-login");
 	appear("#scr-error-login");
 }
 
 recorderUI.prototype.setSave = function() {
-	dissapear("#scr-start");
-	dissapear("#scr-login");
-	dissapear("#scr-error-login");
-	dissapear("#scr-recording");
-	dissapear("#scr-error-save");
-	dissapear("#scr-result");
+	disappear("#scr-start");
+	disappear("#scr-login");
+	disappear("#scr-error-login");
+	disappear("#scr-recording");
+	disappear("#scr-error-save");
+	disappear("#scr-result");
 	appear("#scr-save");
 }
 
@@ -114,19 +114,19 @@ recorderUI.prototype.asserting = function() {
 }
 
 recorderUI.prototype.setResult = function() {
-	dissapear("#scr-save");
-	dissapear("#scr-error-save");
+	disappear("#scr-save");
+	disappear("#scr-error-save");
 	appear("#scr-result");
 }
 
 recorderUI.prototype.setSaveError = function() {
-	dissapear("#scr-save");
-	dissapear("#scr-result");
+	disappear("#scr-save");
+	disappear("#scr-result");
 	appear("#scr-error-save");
 }
 
 recorderUI.prototype.setLogout = function() {
-	dissapear("#scr-start");
+	disappear("#scr-start");
 	appear("#scr-login");
 	
 	ui.recorder.logout();
@@ -135,17 +135,17 @@ recorderUI.prototype.setLogout = function() {
 }
 
 recorderUI.prototype.setStarted = function() {
-	dissapear("#scr-login");
-	dissapear("#scr-error-login");
-	dissapear("#scr-error-save");
-	dissapear("#scr-recording");
-	dissapear("#scr-save");
-	dissapear("#scr-result");
+	disappear("#scr-login");
+	disappear("#scr-error-login");
+	disappear("#scr-error-save");
+	disappear("#scr-recording");
+	disappear("#scr-save");
+	disappear("#scr-result");
 	appear("#scr-start");
 }
 
 recorderUI.prototype.startRecording = function() {
-	dissapear("#scr-start");
+	disappear("#scr-start");
 	appear("#scr-recording");
 	
 	ui.recorder.start();
@@ -154,7 +154,7 @@ recorderUI.prototype.startRecording = function() {
 }
 
 recorderUI.prototype.doneRecording = function() {
-	dissapear("#scr-recording");
+	disappear("#scr-recording");
 	appear("#scr-save");
 	
 	ui.recorder.done();
@@ -163,7 +163,7 @@ recorderUI.prototype.doneRecording = function() {
 }
 
 recorderUI.prototype.cancelRecording = function() {
-	dissapear("#scr-recording");
+	disappear("#scr-recording");
 	appear("#scr-start");
 	
 	ui.recorder.stop();
@@ -172,7 +172,7 @@ recorderUI.prototype.cancelRecording = function() {
 }
 
 recorderUI.prototype.saveRecord = function() {
-	dissapear("#scr-save");
+	disappear("#scr-save");
 	appear("#scr-result");
 	
 	ui.recorder.saving();
@@ -181,7 +181,7 @@ recorderUI.prototype.saveRecord = function() {
 }
 
 recorderUI.prototype.cancelSaving = function() {
-	dissapear("#scr-save");
+	disappear("#scr-save");
 	appear("#scr-start");
 	
 	ui.recorder.stop();
